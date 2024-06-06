@@ -1,0 +1,53 @@
+﻿@model IMAGE_CRUD.Models.CustomProduct
+
+@{
+    ViewData["Title"] = "addproduct";
+}
+
+<h1>addproduct</h1>
+
+<h4>Product</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="addproduct" enctype="multipart/form-data">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="CProduct.ProductName" class="control-label"></label>
+                <input asp-for="CProduct.ProductName" class="form-control" />
+                <span asp-validation-for="CProduct.ProductName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="CProduct.ProductCategory" class="control-label"></label>
+                <select asp-for="CProduct.ProductCategory" class ="form-control" asp-items="ViewBag.ProductCategory">
+                    @foreach(var item in Model.CPCategory)
+                    {
+                        <option value="@item.CategoryId">@item.CategoryName</option>
+                    }
+                </select>
+            </div>
+            <div class="form-group">
+                <label asp-for="CProduct.ProductImage" class="control-label"></label>
+                <input type="file" name="img" class="form-control" />
+                <p class="text-danger">@ViewBag.imgfailed</p>
+                <span asp-validation-for="CProduct.ProductImage" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="CProduct.ProductPrice" class="control-label"></label>
+                <input asp-for="CProduct.ProductPrice" class="form-control" />
+                <span asp-validation-for="CProduct.ProductPrice" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="productlist">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

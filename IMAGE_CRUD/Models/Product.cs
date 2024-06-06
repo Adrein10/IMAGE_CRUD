@@ -16,7 +16,7 @@ namespace IMAGE_CRUD.Models
         public string ProductImage { get; set; } = null!;
         public int ProductPrice { get; set; }
 
-        public virtual PCategory ProductCategoryNavigation { get; set; } = null!;
+        public virtual PCategory ProductCategoryNavigation { get; set; } 
         public virtual ICollection<Cart> Carts { get; set; }
     }
 }

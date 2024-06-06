@@ -1,6 +1,8 @@
 ﻿using IMAGE_CRUD.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System.Diagnostics;
+using System.Reflection.PortableExecutable;
 
 namespace IMAGE_CRUD.Controllers
 {
@@ -21,8 +23,58 @@ namespace IMAGE_CRUD.Controllers
         {
             return View();
         }
+        public IActionResult productlist()
+        {
+            var show = context.Products.Include(options => options.ProductCategoryNavigation).ToList();
+            return View(show);
+        }
         public IActionResult addproduct()
         {
+            CustomProduct product = new CustomProduct()
+            {
+                CProduct = new Product(),
+                CPCategory = context.PCategories.ToList()
+            };
+            return View(product);
+        }
+        [HttpPost]
+        public IActionResult addproduct(CustomProduct customProduct,IFormFile img)
+        { 
+            if(img != null && img.Length > 1)
+            {
+                var type = System.IO.Path.GetExtension(img.FileName).Substring(1);
+                if(type == "png" || type == "jfif" || type == "jpeg" || type == "jpg")
+                {
+                    var imgname = Path.GetFileName(img.FileName);
+                    var name = Guid.NewGuid() +imgname;
+                    var folder = Path.Combine(HttpContext.Request.PathBase.Value, "wwwroot/productimg");
+                    if (!Directory.Exists(folder))
+                    {
+                        Directory.CreateDirectory(folder);
+                    }
+                    var path = Path.Combine(folder, name);
+
+                    using (var stream = new FileStream(path, FileMode.Create))
+                    {
+                        img.CopyTo(stream);
+                    }
+                    var dbPath = Path.Combine("images", name);
+                    Product product = new Product()
+                    {
+                        ProductName = customProduct.CProduct.ProductName,
+                        ProductCategory = customProduct.CProduct.ProductCategory,
+                        ProductImage = dbPath,
+                        ProductPrice = customProduct.CProduct.ProductPrice
+                    };
+                    context.Products.Add(product);
+                    context.SaveChanges();
+                    return RedirectToAction("productlist");
+
+                }else
+                {
+                    ViewBag.imgfailed = "file type note supported";
+                }
+            }
             return View();
         }
         public IActionResult Privacy()
