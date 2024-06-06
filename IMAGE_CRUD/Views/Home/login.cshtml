@@ -1,0 +1,38 @@
+﻿@model IMAGE_CRUD.Models.UserReg
+
+@{
+    ViewData["Title"] = "login";
+}
+
+<h1>login</h1>
+
+<h4>UserReg</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="login">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Useremail" class="control-label"></label>
+                <input asp-for="Useremail" class="form-control" />
+                <span asp-validation-for="Useremail" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Userpass" class="control-label"></label>
+                <input asp-for="Userpass" class="form-control" />
+                <span asp-validation-for="Userpass" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="login" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="signup">Create Account</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

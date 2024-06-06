@@ -21,7 +21,10 @@ namespace IMAGE_CRUD.Controllers
         {
             return View();
         }
-
+        public IActionResult addproduct()
+        {
+            return View();
+        }
         public IActionResult Privacy()
         {
             return View();
@@ -49,7 +52,16 @@ namespace IMAGE_CRUD.Controllers
             context.SaveChanges();
             return RedirectToAction("Index");
         }
-
+        public IActionResult login()
+        {
+            return View();
+        }
+        [HttpPost]
+        public IActionResult login(UserReg user)
+        {
+            var show = context.UserRegs.Where(option => option.Useremail == user.Useremail && option.Userpass == user.Userpass).FirstOrDefault();
+            return View();
+        }
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {
