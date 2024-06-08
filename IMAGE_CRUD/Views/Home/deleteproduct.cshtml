@@ -1,0 +1,45 @@
+﻿@model IMAGE_CRUD.Models.CustomProduct
+
+@{
+    ViewData["Title"] = "deleteproduct";
+}
+
+<h1>deleteproduct</h1>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>Product</h4>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.CProduct.ProductName)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.CProduct.ProductName)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.CProduct.ProductImage)
+        </dt>
+        <dd class = "col-sm-10">
+            <img src="~/@Html.DisplayFor(model => model.CProduct.ProductImage)" width="200px" height="200px"/>
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.CProduct.ProductPrice)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.CProduct.ProductPrice)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.CProduct.ProductCategoryNavigation)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.CProduct.ProductCategoryNavigation.CategoryName)
+        </dd>
+    </dl>
+    
+    <form asp-action="deleteproduct">
+        <input type="hidden" asp-for="CProduct.ProductId" />
+        <input type="submit" value="Delete" class="btn btn-danger" /> |
+        <a asp-action="productlist">Back to List</a>
+    </form>
+</div>
