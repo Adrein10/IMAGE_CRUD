@@ -23,20 +23,19 @@ namespace IMAGE_CRUD.Controllers
         {
             var Srole = accessor.HttpContext.Session.GetString("sessionrole");
             var Sname = accessor.HttpContext.Session.GetString("sessionname");
-            if(Srole != null && Srole == "Customer")
+            var show = context.Products.ToList();
+            if (Srole != null && Srole == "Customer")
             {
                 ViewBag.SessionName = Sname;
-                return View();
+                return View(show);
             }
             else if (Srole != null && Srole == "Admin")
             {
                 ViewBag.SessionName = Sname;
-                return View("Index","Admin");
+                return View(show);
             }
-            else
-            {
-                return RedirectToAction("login","Home");
-            }
+
+            return View(show);
         }
         public IActionResult productlist()
         {
@@ -209,7 +208,7 @@ namespace IMAGE_CRUD.Controllers
                     return RedirectToAction("Index", "Home");
                 }else if(findrole.RoleName == "Admin")
                 {
-                    return RedirectToAction("Index", "Admin");
+                    return RedirectToAction("Index", "Home");
                 }
             }
             return View();

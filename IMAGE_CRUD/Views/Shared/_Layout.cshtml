@@ -26,9 +26,12 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="productlist">Products</a>
-                        </li>
+                        @if(accessor.HttpContext.Session.GetString("sessionrole") == "Admin")
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="productlist">Products</a>
+                            </li>
+                        }
                     </ul>
                 </div>
             </div>
@@ -36,6 +39,11 @@
             {
                 <h6 class="text-success">Welcome @ViewBag.SessionName</h6>
                 <a class="btn btn-danger" asp-area="" asp-controller="Home" asp-action="logout">Logout</a>
+            }
+            else
+            {
+                <a class="btn btn-success" asp-area="" asp-controller="Home" asp-action="login">Login</a>
+                
             }
         </nav>
     </header>
